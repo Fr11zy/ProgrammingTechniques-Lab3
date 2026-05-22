@@ -1,0 +1,6 @@
+*.bin
+*.csv
+search_bench
+__pycache__/
+venv/
+env/
