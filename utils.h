@@ -62,8 +62,10 @@ void run_and_save_statistics(PRNG& gen, const std::string& gen_name, std::ofstre
                              
     std::cout << "\nСтатистика " << num_samples << " выборок для " << gen_name 
               << " (Диапазон 0-" << range_max << ")\n";
+              
     std::cout << std::setw(8) << "Sample" << std::setw(15) << "Mean" << std::setw(15) << "StdDev" 
-              << std::setw(15) << "CV" << std::setw(15) << "Chi-Square" << "\n";
+              << std::setw(15) << "CV" << std::setw(15) << "Chi-Square" 
+              << std::setw(10) << "Uniform?" << std::setw(10) << "Random?" << "\n";
          
     for (int i = 0; i < num_samples; ++i) {
         std::vector<double> sample(sample_size);
@@ -73,16 +75,19 @@ void run_and_save_statistics(PRNG& gen, const std::string& gen_name, std::ofstre
         
         Stats s = calculate_stats(sample, range_max);
         
-        // Вывод в консоль
         std::cout << std::setw(8) << i + 1 
                   << std::setw(15) << s.mean 
                   << std::setw(15) << s.stddev 
                   << std::setw(15) << s.cv 
-                  << std::setw(15) << s.chi_square << "\n";
+                  << std::setw(15) << s.chi_square
+                  << std::setw(10) << (s.is_passed ? "Yes" : "No")
+                  << std::setw(10) << (s.is_random ? "Yes" : "No") << "\n";
              
-        // Запись в CSV файл
+        // Запись в CSV файл 
         csv_file << gen_name << "," << i + 1 << "," << s.mean << "," 
-                 << s.stddev << "," << s.cv << "," << s.chi_square << "\n";
+                 << s.stddev << "," << s.cv << "," << s.chi_square << ","
+                 << (s.is_passed ? "Yes" : "No") << ","
+                 << (s.is_random ? "Yes" : "No") << "\n";
     }
 }
 

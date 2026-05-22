@@ -28,7 +28,7 @@ int main() {
     const double range_max = 5000.0;
 
     ofstream stats_results("prng_stats.csv");
-    stats_results << "Generator,Sample,Mean,StdDev,CV,ChiSquare\n";
+    stats_results << "Generator,Sample,Mean,StdDev,CV,ChiSquare,Uniform_Passed,Random_Passed\n";
 
     run_and_save_statistics(lcg, "LCG", stats_results, num_samples, sample_size, range_max);
     run_and_save_statistics(xor_gen, "XorShift", stats_results, num_samples, sample_size, range_max);
@@ -36,7 +36,7 @@ int main() {
     
     stats_results.close();
     cout << "\n Cтатистика по всем выборкам сохранена в prng_stats.csv\n";
-
+    
 
     // Diehard
     cout << "\nГенерация бинарных данных для тестов Diehard\n";
